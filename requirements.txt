@@ -1,0 +1,10 @@
+streamlit
+pandas
+geopandas
+numpy
+matplotlib
+openpyxl
+streamlit-aggrid
+folium
+streamlit-folium
+reportlab
