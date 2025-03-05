@@ -89,6 +89,9 @@ order = st.data_editor(
 if st.button("Réinitialiser la commande"):
     ResetOrder()
 
+st.write(type(order))
+st.write(order)
+
 if order.shape[0]>1:
 
     # Retrieve client's name
