@@ -53,7 +53,7 @@ products_file_path = os.path.join(root_dir, "products.xlsx")
 
 # Get list of products
 df = pd.read_excel(products_file_path, sheet_name="products")
-df["Prix"] = df["Prix"].apply(lambda x: x if "/kg" in str(x).lower() else "{} €".format(x))
+df["price"] = df["price"].apply(lambda x: x if "/kg" in str(x).lower() else "{} €".format(x))
 #df["Image_Path"] = df["Image_Path"].astype(str)
 df.insert(0, "quantity", 0)
 df.insert(0, "select", False)
@@ -66,7 +66,6 @@ import streamlit as st
 # Column configs
 image_conf = st.column_config.ImageColumn(label="Photo", width="small", help="Photo non contractuelle")
 select_conf = st.column_config.CheckboxColumn(label="Ajouter au panier")
-quantity_conf = "Quantité (en kg ou unités)"
 # Choose which column are editable
 active_cols = ["select", "quantity"]
 disabled_cols = [col for col in df.columns if col not in active_cols]
@@ -74,10 +73,12 @@ disabled_cols = [col for col in df.columns if col not in active_cols]
 selected_rows = st.data_editor(
                                 df,
                                 column_config={
+                                                "name":"Nom",
+                                                "price":"Prix",
                                                 "select":select_conf,
-                                                "quantity":quantity_conf,
-                                                "Catégorie":None,
-                                                "Image_Path":image_conf,
+                                                "quantity":"Quantité (en kg ou unités)",
+                                                "category":None,
+                                                "image_path":image_conf,
                                                 },
                                 hide_index = True,
                                 disabled = disabled_cols,
@@ -93,7 +94,7 @@ order = selected_rows[selected_rows["select"]]
 
 if order.shape[0]>0:
     
-    st.dataframe(order.drop("Image_Path", axis=1))
+    st.dataframe(order.drop("image_path", axis=1), hide_index=True)
 
     # Retrieve client's name
     client_name = st.text_input("Votre nom (appuyez sur entrée pour valider)", value="", placeholder="Veuillez entrer votre nom")
@@ -102,7 +103,7 @@ if order.shape[0]>0:
     
     # Update prices
     final_order = UpdateOrderFinal(order)
-    st.dataframe(final_order)
+    st.dataframe(final_order, hide_index=True)
     # Generate PDF
     pdf_buffer = GeneratePDF(pd.DataFrame(final_order), client_name, note)
     

@@ -160,18 +160,18 @@ def GeneratePDF(df, client_name, note):
                 pdf.cell(product_width+price_width+quantity_width, cell_height, txt="", border=0)
                 pdf.cell(total_width, cell_height, txt=row["total"], border=1, align="C", fill=False)
             else:
-                pdf.cell(product_width, cell_height, txt=row["Nom"], border=1, align="C", fill=True)
-                pdf.cell(price_width, cell_height, txt=str(row["Prix"]), border=1, align="C", fill=False)
+                pdf.cell(product_width, cell_height, txt=row["name"], border=1, align="C", fill=True)
+                pdf.cell(price_width, cell_height, txt=str(row["price"]), border=1, align="C", fill=False)
                 #pdf.cell(category_width, cell_height, txt=str(row["Categorie"]), border=1, align="C", fill=True)
                 pdf.cell(quantity_width, cell_height, txt=str(row["quantity"]), border=1, align="C", fill=False)
                 pdf.cell(total_width, cell_height, txt=row["total"], border=1, align="C", fill=False)
             pdf.ln()
     
     # Get unique categories
-    categories = df["Catégorie"].unique()
+    categories = df["category"].unique()
     for category in categories:
         
-        sub_df = df[df["Catégorie"]==category]
+        sub_df = df[df["category"]==category]
         if category.lower() == "apiculture":
             pdf.set_fill_color(255, 255, 204)
         elif category.lower() == "fromagerie":
@@ -212,10 +212,10 @@ def UpdateOrderFinal(order):
     if "total" in order.columns:
         order.drop("total", axis=1, inplace=True)
     # Remove row with grand total
-    order = order[order["Nom"].str.strip() != ""]
+    order = order[order["name"].str.strip() != ""]
     
     # Updates total price based on price and quantity
-    order["price_temp"] = order["Prix"].apply(lambda x: float(x.split(" ")[0].replace(",", ".")))
+    order["price_temp"] = order["price"].apply(lambda x: float(x.split(" ")[0].replace(",", ".")))
     order["quantity"] = pd.to_numeric(order["quantity"], errors='coerce')
     order["total"] = order["price_temp"] * order["quantity"]
     
@@ -223,10 +223,10 @@ def UpdateOrderFinal(order):
     order = order[order["quantity"] != 0]
     
     # Add grand total
-    order = order._append({"Nom":"", "Prix":"", "Catégorie":"", "quantity":"", "total":order["total"].sum()}, ignore_index=True)
+    order = order._append({"name":"", "price":"", "category":"", "quantity":"", "total":order["total"].sum()}, ignore_index=True)
     order["total"] = order["total"].apply(lambda x: "{:.2f} €".format(x))
 
     # Cleaning
-    final_order = order[['Nom', 'Prix', 'Catégorie', 'quantity', 'total']]
+    final_order = order[['name', 'price', 'category', 'quantity', 'total']]
 
     return final_order
