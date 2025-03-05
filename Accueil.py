@@ -8,7 +8,7 @@ from datetime import datetime as dt
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, DataReturnMode
 from st_aggrid.shared import JsCode, ColumnsAutoSizeMode
 
-from pages.utils.helper import UpdateOrder, ResetOrder
+from pages.utils.helper import UpdateOrderFinal, ResetOrder
 from pages.utils.helper import GeneratePDF, SendEmail
 
 # Retrieve secrets
@@ -91,17 +91,21 @@ if st.button("Réinitialiser la commande"):
 
 order = selected_rows[selected_rows["select"]]
 
-if order.shape[0]>1:
+if order.shape[0]>0:
+    
+    st.dataframe(order)
 
     # Retrieve client's name
     client_name = st.text_input("Votre nom (appuyez sur entrée pour valider)", value="", placeholder="Veuillez entrer votre nom")
     note = st.text_input("Ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
     st.session_state["client_name"] = client_name
     
+    # Update prices
+    UpdateOrderFinal(order)
     # Generate PDF
     pdf_buffer = GeneratePDF(pd.DataFrame(order), client_name, note)
     
-    # Download button
+    # Download button - PDF need to be generated before
     if st.download_button(label="Télécharger le bon de commande",
                     type="primary",
                     data=pdf_buffer,

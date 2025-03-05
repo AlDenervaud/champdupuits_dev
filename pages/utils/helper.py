@@ -163,7 +163,7 @@ def GeneratePDF(df, client_name, note):
                 pdf.cell(product_width, cell_height, txt=row["Nom"], border=1, align="C", fill=True)
                 pdf.cell(price_width, cell_height, txt=str(row["Prix"]), border=1, align="C", fill=False)
                 #pdf.cell(category_width, cell_height, txt=str(row["Categorie"]), border=1, align="C", fill=True)
-                pdf.cell(quantity_width, cell_height, txt=str(row["Quantité"]), border=1, align="C", fill=False)
+                pdf.cell(quantity_width, cell_height, txt=str(row["quantity"]), border=1, align="C", fill=False)
                 pdf.cell(total_width, cell_height, txt=row["Total"], border=1, align="C", fill=False)
             pdf.ln()
     
