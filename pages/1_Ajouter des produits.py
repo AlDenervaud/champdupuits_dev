@@ -2,9 +2,8 @@ import os
 import streamlit as st
 import pandas as pd
 import numpy as np
-from datetime import datetime as dt
 #Grid view
-from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, DataReturnMode
+from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
 from st_aggrid.shared import JsCode, ColumnsAutoSizeMode
 
 
@@ -23,15 +22,9 @@ df["Prix"] = df["Prix"].apply(lambda x: x if "/kg" in str(x).lower() else "{} �
 # https://discuss.streamlit.io/t/streamlit-aggrid-version-creating-an-aggrid-with-columns-with-embedded-urls/39640
 # https://discuss.streamlit.io/t/add-image-and-header-to-streamlit-dataframe-table/36065/3
 
-if False:
-    # Filter using category
-    categories = set(df["Catégorie"].unique())
-    option = st.selectbox("Sélectionnez une catégorie de produits",
-                        categories)
-    #filtered_df = df[df["Catégorie"].isin(option)]
-    filtered_df = df[df["Catégorie"]==option] #.loc[:, df.columns != "Catégorie"]
-else:
-    filtered_df = df.copy()
+filtered_df = df.copy()
+
+st.dataframe(filtered_df)
 
 gb = GridOptionsBuilder.from_dataframe(filtered_df) #, editable=True)
 gb.configure_grid_options(rowHeight=100)
