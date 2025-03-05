@@ -29,55 +29,56 @@ df = pd.read_excel(products_file_path, sheet_name="products")
 df["Prix"] = df["Prix"].apply(lambda x: x if "/kg" in str(x).lower() else "{} €".format(x))
 df["Image_Path"] = df["Image_Path"].astype(str)
 
-# Create a grid
-gb = GridOptionsBuilder.from_dataframe(df) #, editable=True)
-gb.configure_grid_options(rowHeight=100)
-gb.configure_selection(selection_mode='multiple', use_checkbox=True)
-#gb.configure_pagination(paginationAutoPageSize=False)  # Disable pagination
 
-# Option to add image into the grid display
-thumbnail_renderer = JsCode("""
-        class ThumbnailRenderer {
-            init(params) {
-            this.eGui = document.createElement('img');
-            this.eGui.setAttribute('src', params.value);
-            this.eGui.setAttribute('width', 'auto');
-            this.eGui.setAttribute('height', '100');
-            }
-            getGui() {
-            return this.eGui;
-            }
-        }
-    """)
+# # Create a grid
+# gb = GridOptionsBuilder.from_dataframe(df) #, editable=True)
+# gb.configure_grid_options(rowHeight=100)
+# gb.configure_selection(selection_mode='multiple', use_checkbox=True)
+# #gb.configure_pagination(paginationAutoPageSize=False)  # Disable pagination
 
-# Configure image column to use the renderer
-gb.configure_column(
-        "Image_Path",
-        headerName="Photo",
-        width=100,
-        cellRenderer=thumbnail_renderer
-    )
+# # Option to add image into the grid display
+# thumbnail_renderer = JsCode("""
+#         class ThumbnailRenderer {
+#             init(params) {
+#             this.eGui = document.createElement('img');
+#             this.eGui.setAttribute('src', params.value);
+#             this.eGui.setAttribute('width', 'auto');
+#             this.eGui.setAttribute('height', '100');
+#             }
+#             getGui() {
+#             return this.eGui;
+#             }
+#         }
+#     """)
 
-# Display the dataframe with AgGrid
-grid = AgGrid(df,
-            gridOptions=gb.build(),
-            updateMode=GridUpdateMode.VALUE_CHANGED,
-            allow_unsafe_jscode=True,
-            fit_columns_on_grid_load=True,
-            columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW,
-            height=400,
-            custom_css={'.ag-row .ag-cell': {
-                                             'display': 'flex',
-                                             'justify-content': 'left',
-                                             'align-items': 'center'
-                                            },
-                        '.ag-header-cell-label': {
-                                                  'justify-content': 'center'
-                                                 },
-                        "#gridToolBar": {"padding-bottom": "0px !important"
-                                        }
-                        }
-             )
+# # Configure image column to use the renderer
+# gb.configure_column(
+#         "Image_Path",
+#         headerName="Photo",
+#         width=100,
+#         cellRenderer=thumbnail_renderer
+#     )
+
+# # Display the dataframe with AgGrid
+# grid = AgGrid(df,
+#             gridOptions=gb.build(),
+#             updateMode=GridUpdateMode.VALUE_CHANGED,
+#             allow_unsafe_jscode=True,
+#             fit_columns_on_grid_load=True,
+#             columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW,
+#             height=400,
+#             custom_css={'.ag-row .ag-cell': {
+#                                              'display': 'flex',
+#                                              'justify-content': 'left',
+#                                              'align-items': 'center'
+#                                             },
+#                         '.ag-header-cell-label': {
+#                                                   'justify-content': 'center'
+#                                                  },
+#                         "#gridToolBar": {"padding-bottom": "0px !important"
+#                                         }
+#                         }
+#              )
 
 
 
