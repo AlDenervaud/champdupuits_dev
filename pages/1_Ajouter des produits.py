@@ -54,26 +54,28 @@ gb.configure_column(
 )
 
 # Display the dataframe with AgGrid
-grid = AgGrid(filtered_df,
-            gridOptions=gb.build(),
-            updateMode=GridUpdateMode.VALUE_CHANGED,
-            allow_unsafe_jscode=True,
-            fit_columns_on_grid_load=True,
-            columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW,
-            height=400,
-            custom_css={'.ag-row .ag-cell': {
-                                             'display': 'flex',
-                                             'justify-content': 'left',
-                                             'align-items': 'center'
-                                            },
-                        '.ag-header-cell-label': {
-                                                  'justify-content': 'center'
-                                                 },
-                        "#gridToolBar": {"padding-bottom": "0px !important"
-                                        }
-                        }
-             )
-
+try:
+    grid = AgGrid(filtered_df,
+                gridOptions=gb.build(),
+                updateMode=GridUpdateMode.VALUE_CHANGED,
+                allow_unsafe_jscode=True,
+                fit_columns_on_grid_load=True,
+                columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW,
+                height=400,
+                custom_css={'.ag-row .ag-cell': {
+                                                 'display': 'flex',
+                                                 'justify-content': 'left',
+                                                 'align-items': 'center'
+                                                },
+                            '.ag-header-cell-label': {
+                                                      'justify-content': 'center'
+                                                     },
+                            "#gridToolBar": {"padding-bottom": "0px !important"
+                                            }
+                            }
+                 )
+except Exception as e:
+    st.write(e)
 
 # Extract selected rows
 selected_rows = grid['selected_rows']
