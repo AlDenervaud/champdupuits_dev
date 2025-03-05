@@ -103,7 +103,7 @@ if order.shape[0]>0:
                                     "name":"Nom",
                                     "price":"Prix",
                                     "category":None,
-                                    "quantity":"Quantité (en kg ou unités)",
+                                    "quantity":"Quantité",
                                     "total":"Total",
                                     },
                     hide_index = True,
