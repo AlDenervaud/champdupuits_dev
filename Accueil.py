@@ -36,7 +36,7 @@ st.markdown(
 )
        
 # Title of the Streamlit app
-st.title(":rainbow[Bienvenue au Champs du Puits]")
+st.title(":rainbow[Bienvenue au Champ du Puits]")
 
 st.markdown("""Sur ce site vous pourrez trouver la liste des produits de la ferme Au Champ du Puits
  et créer un bon de commande à télécharger. Envoyez le bon de commande à l'adresse email ci-dessous, 
