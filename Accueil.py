@@ -45,8 +45,8 @@ st.markdown("""Sur ce site vous pourrez trouver la liste des produits de la ferm
  La liste est indicative uniquement et ne reflète pas l'état des stocks,
  il se peut que certains produits soient indisponibles.""")
  
-st.info(""""Dans le tableau ci-dessous, cochez les produits que vous souhaitez commander et
-    indiquez les quantités voulues en nombre d'unités ou en poids (kg)""",
+st.info("""Dans le tableau ci-dessous, cochez les produits que vous souhaitez commander et
+    indiquez les quantités voulues en nombre d'unités ou en poids (kg).""",
     icon="✍️",
 )
  
@@ -120,7 +120,7 @@ if order.shape[0]>0:
     
     # Retrieve client's name
     client_name = st.text_input("Votre nom (appuyez sur entrée pour valider)", value="", placeholder="Veuillez entrer votre nom")
-    note = st.text_input("Ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
+    note = st.text_input("optionnel: ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
     st.session_state["client_name"] = client_name
     
     # Proceed to PDF generation / download only if a name has been provided
