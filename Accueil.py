@@ -105,11 +105,12 @@ if order.shape[0]>0:
                     column_config={
                                     "name":"Nom",
                                     "price":"Prix",
+                                    "category":None,
                                     "quantity":"Quantité (en kg ou unités)",
                                     "total":"Total",
                                     },
                     hide_index = True,
-                    disabled = order.columns,
+                    disabled = final_order.columns,
                 )
     
     # Retrieve client's name
