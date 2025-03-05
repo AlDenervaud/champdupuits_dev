@@ -91,10 +91,6 @@ order = selected_rows[selected_rows["select"]]
 
 # Proceed only if at least one row selected
 if order.shape[0]>0:
-    
-    # Reset order button
-    if st.button("Réinitialiser la commande"):
-        ResetOrder()
 
     # Update prices
     final_order = UpdateOrderFinal(order)
