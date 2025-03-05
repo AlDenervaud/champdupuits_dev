@@ -32,74 +32,18 @@ df["Image_Path"] = df["Image_Path"].astype(str)
 import pandas as pd
 import streamlit as st
 
-data_df = pd.DataFrame(
-    {
-        "apps": [
-            "https://storage.googleapis.com/s4a-prod-share-preview/default/st_app_screenshot_image/5435b8cb-6c6c-490b-9608-799b543655d3/Home_Page.png",
-            "https://storage.googleapis.com/s4a-prod-share-preview/default/st_app_screenshot_image/ef9a7627-13f2-47e5-8f65-3f69bb38a5c2/Home_Page.png",
-            "https://storage.googleapis.com/s4a-prod-share-preview/default/st_app_screenshot_image/31b99099-8eae-4ff8-aa89-042895ed3843/Home_Page.png",
-            "https://storage.googleapis.com/s4a-prod-share-preview/default/st_app_screenshot_image/6a399b09-241e-4ae7-a31f-7640dc1d181e/Home_Page.png",
-        ],
-    }
-)
+# Column configs
+image_conf = st.column_config.ImageColumn(label="Photo", width="medium", help="Photo non contractuelle")
 
-st.data_editor(
-    df,
-    column_config={
-                    "Image_Path": st.column_config.ImageColumn("Photo", width="small", help="Streamlit app preview screenshots")
-    },
-    hide_index=True,
-)
+selected_rows = st.data_editor(
+                                df,
+                                column_config={
+                                                "Image_Path":image_conf,
+                                },
+                                hide_index = True,
+                                disabled = df.columns,
+                            )
 
-# # Create a grid
-# gb = GridOptionsBuilder.from_dataframe(df) #, editable=True)
-# gb.configure_grid_options(rowHeight=100)
-# gb.configure_selection(selection_mode='multiple', use_checkbox=True)
-# #gb.configure_pagination(paginationAutoPageSize=False)  # Disable pagination
-
-# # Option to add image into the grid display
-# thumbnail_renderer = JsCode("""
-#         class ThumbnailRenderer {
-#             init(params) {
-#             this.eGui = document.createElement('img');
-#             this.eGui.setAttribute('src', params.value);
-#             this.eGui.setAttribute('width', 'auto');
-#             this.eGui.setAttribute('height', '100');
-#             }
-#             getGui() {
-#             return this.eGui;
-#             }
-#         }
-#     """)
-
-# # Configure image column to use the renderer
-# gb.configure_column(
-#         "Image_Path",
-#         headerName="Photo",
-#         width=100,
-#         cellRenderer=thumbnail_renderer
-#     )
-
-# # Display the dataframe with AgGrid
-# grid = AgGrid(df,
-#             gridOptions=gb.build(),
-#             updateMode=GridUpdateMode.VALUE_CHANGED,
-#             allow_unsafe_jscode=True,
-#             fit_columns_on_grid_load=True,
-#             columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW,
-#             height=400,
-#             custom_css={'.ag-row .ag-cell': {
-#                                              'display': 'flex',
-#                                              'justify-content': 'left',
-#                                              'align-items': 'center'
-#                                             },
-#                         '.ag-header-cell-label': {
-#                                                   'justify-content': 'center'
-#                                                  },
-#                         "#gridToolBar": {"padding-bottom": "0px !important"
-#                                         }
-#                         }
-#              )
 
 
 
