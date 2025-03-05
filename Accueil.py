@@ -45,7 +45,7 @@ st.markdown("""Sur ce site vous pourrez trouver la liste des produits de la ferm
  La liste est indicative uniquement et ne reflète pas l'état des stocks,
  il se peut que certains produits soient indisponibles.""")
  
- st.markdown("""Indiquez les quantités voulues dans le tableau ci-dessous, en nombre d'unités ou en poids (kg)""")
+st.markdown("""Indiquez les quantités voulues dans le tableau ci-dessous, en nombre d'unités ou en poids (kg)""")
  
 ###############################################################################
 
@@ -78,7 +78,7 @@ selected_rows = st.data_editor(
                                                 "price":"Prix",
                                                 "units":None,
                                                 "select":select_conf,
-                                                "quantity":"Quantité (en kg ou unités)",
+                                                "quantity":"Quantité",
                                                 "category":None,
                                                 "image_path":image_conf,
                                                 },
