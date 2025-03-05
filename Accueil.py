@@ -2,12 +2,22 @@ import os
 import streamlit as st
 import pandas as pd
 import numpy as np
+from datetime import datetime as dt
 # Grid display
 #Grid view
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, DataReturnMode
 from st_aggrid.shared import JsCode, ColumnsAutoSizeMode
 
-from pages.utils.helper import UpdateOrder
+from pages.utils.helper import UpdateOrder, ResetOrder
+from pages.utils.helper import GeneratePDF, SendEmail
+
+# Retrieve secrets
+secrets_email = st.secrets["email"]
+email_address = secrets_email["address"]
+email_passkey = secrets_email["passkey"]
+email_receiver = secrets_email["receiver"]
+
+
 
 # Inject custom CSS to enable full screen width
 st.markdown(
@@ -61,7 +71,7 @@ quantity_conf = "Quantité (en kg ou unités)"
 active_cols = ["select", "quantity"]
 disabled_cols = [col for col in df.columns if col not in active_cols]
 
-selected_rows = st.data_editor(
+order = st.data_editor(
                                 df,
                                 column_config={
                                                 "select":select_conf,
@@ -73,6 +83,42 @@ selected_rows = st.data_editor(
                                 disabled = disabled_cols,
                                 row_height=75,
                             )
+
+
+# Reset order button
+if st.button("Réinitialiser la commande"):
+    ResetOrder()
+    
+# Retrieve client's name
+client_name = st.text_input("Votre nom (appuyez sur entrée pour valider)", value="", placeholder="Veuillez entrer votre nom")
+note = st.text_input("Ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
+st.session_state["client_name"] = client_name
+
+# Generate PDF
+pdf_buffer = GeneratePDF(pd.DataFrame(order), client_name, note)
+
+# Download button
+if st.download_button(label="Télécharger le bon de commande",
+                type="primary",
+                data=pdf_buffer,
+                file_name="Commande_{}_{}.pdf".format(client_name.replace(" ", "_"), dt.now().strftime("%d%m%Y")),
+                mime="application/pdf"
+                ):
+    pass
+
+if True:#client_name == "admin":
+    if st.button("Send Email"):
+        #receiver = #"lechampdupuits@gmail.com"
+        receiver = email_receiver
+        subject = "Commande de la part de {}".format(client_name)
+        body = "Test"
+        if receiver and subject and body and pdf_buffer:
+            SendEmail(receiver, subject, body)
+        else:
+            st.warning("Please fill in all fields.")
+    
+
+
 
 
 
