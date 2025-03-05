@@ -131,6 +131,8 @@ if order.shape[0]>0:
                         mime="application/pdf"
                         ):
             pass
+    else:
+        st.warning("Veuillez entrer votre nom avant de pouvoir télécharger le bon de commande")
     
     if client_name == "admin":
         if st.button("Send Email"):
