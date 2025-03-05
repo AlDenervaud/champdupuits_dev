@@ -101,22 +101,24 @@ if order.shape[0]>0:
     note = st.text_input("Ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
     st.session_state["client_name"] = client_name
     
+    # Update prices
+    final_order = UpdateOrderFinal(order)
+    
+    # Preview
+    st.data_editor(
+                    final_order,
+                    column_config={
+                                    "name":"Nom",
+                                    "price":"Prix",
+                                    "quantity":"Quantité (en kg ou unités)",
+                                    "total":"Total",
+                                    },
+                    hide_index = True,
+                    disabled = order.columns,
+                )
+    
+    # Proceed to PDF generation / download only if a name has been provided
     if client_name != "":
-        # Update prices
-        final_order = UpdateOrderFinal(order)
-        # Preview
-        st.data_editor(
-                        final_order,
-                        column_config={
-                                        "name":"Nom",
-                                        "price":"Prix",
-                                        "quantity":"Quantité (en kg ou unités)",
-                                        "total":"Total",
-                                        },
-                        hide_index = True,
-                        disabled = order.columns,
-                    )
-
         # Generate PDF
         pdf_buffer = GeneratePDF(pd.DataFrame(final_order), client_name, note)
         
