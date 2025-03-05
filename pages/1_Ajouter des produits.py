@@ -8,63 +8,6 @@ from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, DataReturnMode
 from st_aggrid.shared import JsCode, ColumnsAutoSizeMode
 
 
-def UpdateOrder(order_update):
-    """Updates the order dataframe in st.session_state"""
-    try:
-        # Check if the order dataframe has data in items
-        try:
-            order = st.session_state["order_df"]
-        except:
-            order = None
-            
-        if order is not None:
-            # Remove Total column
-            if "Total" in order.columns:
-                order.drop("Total", axis=1, inplace=True) # will be removed when logic applied to else statement
-                
-            # Merge on 'Nom' with matching prices to update quantities
-            order = order[order["Nom"].str.strip() != ""]
-            merged_order = pd.merge(order, order_update, on=['Nom', 'Prix', 'Catégorie'], how='outer', suffixes=('_current', '_new'))
-            
-            # Combine quantities, handling NaN values from merge
-            merged_order["Quantité_current"] = pd.to_numeric(merged_order["Quantité_current"], errors='coerce')
-            merged_order["Quantité_new"] = pd.to_numeric(merged_order["Quantité_new"], errors='coerce')
-            merged_order['Quantité'] = merged_order['Quantité_current'].fillna(0) + merged_order['Quantité_new'].fillna(0)
-            
-            # Calculate price for new items
-            merged_order["total_temp"] = merged_order["Prix"].apply(lambda x: float(x.split(" ")[0]))
-            merged_order["Total"] = merged_order["total_temp"] * merged_order["Quantité"]
-            
-            # Add grand total
-            merged_order = merged_order._append({"Nom":"", "Prix":"", "Catégorie":"", "Quantité":"", "Total":merged_order["Total"].sum()}, ignore_index=True)
-            merged_order["Total"] = merged_order["Total"].apply(lambda x: "{:.2f} €".format(x))
-            
-            # Keep only relevant columns
-            final_order = merged_order[['Nom', 'Prix', 'Catégorie', 'Quantité', 'Total']]
-            st.session_state["order_df"] = final_order
-        else:
-            # Calculate price for new items
-            #....
-            st.session_state["order_df"] = order_update
-            
-        #st.success("Commande mise à jour")
-        st.toast("Commande mise à jour avec succès")
-    except Exception as e:
-        st.error("Erreur dans la mise à jour de la commande: {}".format(e))
-    return
-
-
-def ResetOrder():
-    """Empties the order dataframe"""
-    try:
-        st.session_state["order_df"] = None
-        #st.success("Commande effacée")
-        st.toast("Commande effacée avec succès")
-    except Exception as e:
-        st.error("Erreur dans la suppression de la commande: {}".format(e))
-    return
-   
-
 # Title of the Streamlit app
 st.title("Liste des produits")
 
