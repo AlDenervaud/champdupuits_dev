@@ -14,6 +14,7 @@ st.title("Liste des produits")
 
 # Basic settings
 root_dir = os.path.dirname(__file__)
+st.write(root_dir)
 products_file_path = os.path.join(root_dir, "products.xlsx")
 
 # Get list of products
