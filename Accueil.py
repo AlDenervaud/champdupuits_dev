@@ -59,13 +59,9 @@ products_file_path = os.path.join(root_dir, "products.xlsx")
 # Get list of products
 df = pd.read_excel(products_file_path, sheet_name="products")
 df["price"] = df.apply(lambda row: "{} {}".format(row["price"], row["units"]), axis=1)
-df.insert(0, "quantity", 0.0)
+df.insert(0, "quantity", "0")
 df.insert(0, "select", False)
 
-
-
-import pandas as pd
-import streamlit as st
 
 # Column configs
 image_conf = st.column_config.ImageColumn(label="Photo", width="medium", help="Photo non contractuelle")
