@@ -53,7 +53,8 @@ products_file_path = os.path.join(root_dir, "products.xlsx")
 
 # Get list of products
 df = pd.read_excel(products_file_path, sheet_name="products")
-df["price"] = df["price"].apply(lambda x: x if "/kg" in str(x).lower() else "{} €".format(x))
+df["price"] = df.apply(lambda row: "{} {}".format(row["price"], row["units"]))
+#df["price"] = df["price"].apply(lambda x: x if "/kg" in str(x).lower() else "{} €".format(x))
 #df["Image_Path"] = df["Image_Path"].astype(str)
 df.insert(0, "quantity", 0.0)
 df.insert(0, "select", False)
@@ -75,6 +76,7 @@ selected_rows = st.data_editor(
                                 column_config={
                                                 "name":"Nom",
                                                 "price":"Prix",
+                                                "units":None,
                                                 "select":select_conf,
                                                 "quantity":"Quantité (en kg ou unités)",
                                                 "category":None,
