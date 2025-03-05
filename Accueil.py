@@ -8,6 +8,22 @@ from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, DataReturnMode
 from st_aggrid.shared import JsCode, ColumnsAutoSizeMode
 
 from pages.utils.helper import UpdateOrder
+
+# Inject custom CSS to enable full screen width
+st.markdown(
+    """
+    <style>
+        /* Center content horizontally and align to the top */
+        .main .block-container {
+            max-width: 2000px;  /* Adjust width as needed */
+            margin: 0 auto;    /* Center horizontally */
+            padding-top: 50px; /* Adjust top padding for spacing */
+            text-align: center; /* Center text */
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
        
 # Title of the Streamlit app
 st.title(":rainbow[Bienvenue au Champs du Puits]")
@@ -56,37 +72,6 @@ selected_rows = st.data_editor(
                                 disabled = disabled_cols,
                                 row_height=75,
                             )
-
-# # Display selected rows as a new dataframe
-# if selected_rows.shape[0] < 1:
-#     st.warning("Sélectionnez au moins un produit")
-# else:
-#     # Get selected rows and add them to the order df with UpdateOrder()
-#     # The selection dataframe needs to be cleaned before
-#     selected_rows.drop("Image_Path", axis=1, inplace=True)
-#     selected_rows["Quantité"] = np.nan
-    
-#     UpdateOrder(order_update)
-
-
-# # Display selected rows as a new dataframe
-# try:
-#     if selected_rows:
-#         pass
-#     else:
-#         st.write("Les produits sélectionnés s'affichent ci-dessous:")
-# except:
-#     selected_df = pd.DataFrame(selected_rows)  # Properly create DataFrame from list of dicts
-#     selected_df["Quantité"] = np.nan #df['your_column'].astype(float) #[1.0 for i in range(selected_df.shape[0])]
-#     # Cleaning
-#     selected_df.drop("Image_Path", axis=1, inplace=True)
-#     st.markdown("#### Sélection")
-#     st.markdown("Indiquez les quantités voulues dans le tableau ci-dessous.")
-#     st.markdown("Pour retirer un produit du panier, indiquez 0 dans la colonne \"Quantité\".")
-#     selected_df.rename(columns={'Quantité':'Quantité (en kg ou nombre d\'unités)'}, inplace=True)
-#     order_update = st.data_editor(selected_df, use_container_width=False, hide_index=True, disabled=[col for col in selected_df if col != "Quantité (en kg ou nombre d\'unités)"])
-#     order_update.rename(columns={'Quantité (en kg ou nombre d\'unités)': 'Quantité'}, inplace=True)
-
 
 
 
