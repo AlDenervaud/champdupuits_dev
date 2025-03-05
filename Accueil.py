@@ -56,7 +56,7 @@ import streamlit as st
 # Column configs
 image_conf = st.column_config.ImageColumn(label="Photo", width="small", help="Photo non contractuelle")
 select_conf = st.column_config.CheckboxColumn(label="Ajouter au panier")
-quantity_conf = "Quantité (en kg ou nombre d\'unités)"
+quantity_conf = "Quantité (en kg ou unités)"
 # Choose which column are editable
 active_cols = ["select", "quantity"]
 disabled_cols = [col for col in df.columns if col not in active_cols]
@@ -66,6 +66,7 @@ selected_rows = st.data_editor(
                                 column_config={
                                                 "select":select_conf,
                                                 "quantity":quantity_conf,
+                                                "Catégorie":None,
                                                 "Image_Path":image_conf,
                                                 },
                                 hide_index = True,
