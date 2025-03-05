@@ -88,34 +88,36 @@ order = st.data_editor(
 # Reset order button
 if st.button("Réinitialiser la commande"):
     ResetOrder()
+
+if order.shape[0]>1:
+
+    # Retrieve client's name
+    client_name = st.text_input("Votre nom (appuyez sur entrée pour valider)", value="", placeholder="Veuillez entrer votre nom")
+    note = st.text_input("Ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
+    st.session_state["client_name"] = client_name
     
-# Retrieve client's name
-client_name = st.text_input("Votre nom (appuyez sur entrée pour valider)", value="", placeholder="Veuillez entrer votre nom")
-note = st.text_input("Ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
-st.session_state["client_name"] = client_name
-
-# Generate PDF
-pdf_buffer = GeneratePDF(pd.DataFrame(order), client_name, note)
-
-# Download button
-if st.download_button(label="Télécharger le bon de commande",
-                type="primary",
-                data=pdf_buffer,
-                file_name="Commande_{}_{}.pdf".format(client_name.replace(" ", "_"), dt.now().strftime("%d%m%Y")),
-                mime="application/pdf"
-                ):
-    pass
-
-if True:#client_name == "admin":
-    if st.button("Send Email"):
-        #receiver = #"lechampdupuits@gmail.com"
-        receiver = email_receiver
-        subject = "Commande de la part de {}".format(client_name)
-        body = "Test"
-        if receiver and subject and body and pdf_buffer:
-            SendEmail(receiver, subject, body)
-        else:
-            st.warning("Please fill in all fields.")
+    # Generate PDF
+    pdf_buffer = GeneratePDF(pd.DataFrame(order), client_name, note)
+    
+    # Download button
+    if st.download_button(label="Télécharger le bon de commande",
+                    type="primary",
+                    data=pdf_buffer,
+                    file_name="Commande_{}_{}.pdf".format(client_name.replace(" ", "_"), dt.now().strftime("%d%m%Y")),
+                    mime="application/pdf"
+                    ):
+        pass
+    
+    if True:#client_name == "admin":
+        if st.button("Send Email"):
+            #receiver = #"lechampdupuits@gmail.com"
+            receiver = email_receiver
+            subject = "Commande de la part de {}".format(client_name)
+            body = "Test"
+            if receiver and subject and body and pdf_buffer:
+                SendEmail(receiver, subject, body)
+            else:
+                st.warning("Please fill in all fields.")
     
 
 
