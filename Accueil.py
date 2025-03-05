@@ -63,7 +63,7 @@ import pandas as pd
 import streamlit as st
 
 # Column configs
-image_conf = st.column_config.ImageColumn(label="Photo", width="small", help="Photo non contractuelle")
+image_conf = st.column_config.ImageColumn(label="Photo", width="medium", help="Photo non contractuelle")
 select_conf = st.column_config.CheckboxColumn(label="Ajouter au panier")
 # Choose which column are editable
 active_cols = ["select", "quantity"]
@@ -82,7 +82,7 @@ selected_rows = st.data_editor(
                                                 },
                                 hide_index = True,
                                 disabled = disabled_cols,
-                                row_height=75,
+                                row_height=100,
                             )
 
 
