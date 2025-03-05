@@ -33,7 +33,7 @@ import pandas as pd
 import streamlit as st
 
 # Column configs
-image_conf = st.column_config.ImageColumn(label="Photo", width="medium", help="Photo non contractuelle")
+image_conf = st.column_config.ImageColumn(label="Photo", width="small", help="Photo non contractuelle")
 
 selected_rows = st.data_editor(
                                 df,
