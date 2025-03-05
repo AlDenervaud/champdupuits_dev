@@ -71,7 +71,7 @@ quantity_conf = "Quantité (en kg ou unités)"
 active_cols = ["select", "quantity"]
 disabled_cols = [col for col in df.columns if col not in active_cols]
 
-order = st.data_editor(
+selected_rows = st.data_editor(
                                 df,
                                 column_config={
                                                 "select":select_conf,
@@ -89,8 +89,7 @@ order = st.data_editor(
 if st.button("Réinitialiser la commande"):
     ResetOrder()
 
-st.write(type(order))
-st.write(order)
+order = selected_rows[selected_rows["select"]]
 
 if order.shape[0]>1:
 
