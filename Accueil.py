@@ -95,19 +95,6 @@ order = selected_rows[selected_rows["select"]]
 
 # Proceed only if at least one row selected
 if order.shape[0]>0:
-    
-    # Preview
-    st.data_editor(
-                    order,
-                    column_config={
-                                    "name":"Nom",
-                                    "price":"Prix",
-                                    "quantity":"Quantité (en kg ou unités)",
-                                    "total":"Total",
-                                    },
-                    hide_index = True,
-                    disabled = order.columns,
-                )
 
     # Retrieve client's name
     client_name = st.text_input("Votre nom (appuyez sur entrée pour valider)", value="", placeholder="Veuillez entrer votre nom")
@@ -118,8 +105,18 @@ if order.shape[0]>0:
         # Update prices
         final_order = UpdateOrderFinal(order)
         # Preview
-        
-        st.dataframe(final_order, hide_index=True)
+        st.data_editor(
+                        final_order,
+                        column_config={
+                                        "name":"Nom",
+                                        "price":"Prix",
+                                        "quantity":"Quantité (en kg ou unités)",
+                                        "total":"Total",
+                                        },
+                        hide_index = True,
+                        disabled = order.columns,
+                    )
+
         # Generate PDF
         pdf_buffer = GeneratePDF(pd.DataFrame(final_order), client_name, note)
         
