@@ -7,15 +7,13 @@ from datetime import datetime as dt
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, DataReturnMode
 from st_aggrid.shared import JsCode, ColumnsAutoSizeMode
 
-
-from pages.utils.helper import UpdateOrder
    
 
 # Title of the Streamlit app
 st.title("Liste des produits")
 
 # Basic settings
-root_dir = os.path.dirname(os.path.dirname(__file__))
+root_dir = os.path.dirname(__file__)
 products_file_path = os.path.join(root_dir, "products.xlsx")
 
 # Get list of products
