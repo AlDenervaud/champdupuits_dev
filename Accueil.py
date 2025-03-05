@@ -22,7 +22,6 @@ st.markdown("""Sur ce site vous pourrez trouver la liste des produits de la ferm
 
 # Basic settings
 root_dir = os.path.dirname(__file__)
-st.write(root_dir)
 products_file_path = os.path.join(root_dir, "products.xlsx")
 
 # Get list of products
@@ -50,6 +49,8 @@ thumbnail_renderer = JsCode("""
         }
     """)
 
+st.success("thumbnail renderer")
+
 # Configure image column to use the renderer
 gb.configure_column(
         "Image_Path",
@@ -57,7 +58,7 @@ gb.configure_column(
         width=100,
         cellRenderer=thumbnail_renderer
     )
-
+st.success("column config")
 # Display the dataframe with AgGrid
 grid = AgGrid(df,
             gridOptions=gb.build(),
