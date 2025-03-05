@@ -54,8 +54,6 @@ products_file_path = os.path.join(root_dir, "products.xlsx")
 # Get list of products
 df = pd.read_excel(products_file_path, sheet_name="products")
 df["price"] = df.apply(lambda row: "{} {}".format(row["price"], row["units"]), axis=1)
-#df["price"] = df["price"].apply(lambda x: x if "/kg" in str(x).lower() else "{} €".format(x))
-#df["Image_Path"] = df["Image_Path"].astype(str)
 df.insert(0, "quantity", 0.0)
 df.insert(0, "select", False)
 
@@ -109,16 +107,17 @@ if order.shape[0]>0:
     # Generate PDF
     pdf_buffer = GeneratePDF(pd.DataFrame(final_order), client_name, note)
     
-    # Download button - PDF need to be generated before
-    if st.download_button(label="Télécharger le bon de commande",
-                    type="primary",
-                    data=pdf_buffer,
-                    file_name="Commande_{}_{}.pdf".format(client_name.replace(" ", "_"), dt.now().strftime("%d%m%Y")),
-                    mime="application/pdf"
-                    ):
-        pass
+    if client_name != "":
+        # Download button - PDF need to be generated before
+        if st.download_button(label="Télécharger le bon de commande",
+                        type="primary",
+                        data=pdf_buffer,
+                        file_name="Commande_{}_{}.pdf".format(client_name.replace(" ", "_"), dt.now().strftime("%d%m%Y")),
+                        mime="application/pdf"
+                        ):
+            pass
     
-    if True:#client_name == "admin":
+    if client_name == "admin":
         if st.button("Send Email"):
             #receiver = #"lechampdupuits@gmail.com"
             receiver = email_receiver
@@ -129,8 +128,6 @@ if order.shape[0]>0:
             else:
                 st.warning("Please fill in all fields.")
     
-
-
 
 
 
