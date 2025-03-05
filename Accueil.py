@@ -46,7 +46,7 @@ data_df = pd.DataFrame(
 st.data_editor(
     df,
     column_config={
-                    "Image_Path": st.column_config.ImageColumn("Photo", help="Streamlit app preview screenshots")
+                    "Image_Path": st.column_config.ImageColumn("Photo", width="small", help="Streamlit app preview screenshots")
     },
     hide_index=True,
 )
