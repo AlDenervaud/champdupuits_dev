@@ -90,22 +90,35 @@ selected_rows = st.data_editor(
 if st.button("Réinitialiser la commande"):
     ResetOrder()
 
+# Extract selected rows from grid
 order = selected_rows[selected_rows["select"]]
 
+# Proceed only if at least one row selected
 if order.shape[0]>0:
     
-    st.dataframe(order.drop("image_path", axis=1), hide_index=True)
+    # Preview
+    st.data_editor(
+                    order,
+                    column_config={
+                                    "name":"Nom",
+                                    "price":"Prix",
+                                    "quantity":"Quantité (en kg ou unités)",
+                                    "total":"Total",
+                                    },
+                    hide_index = True,
+                    disabled = order.columns,
+                )
 
     # Retrieve client's name
     client_name = st.text_input("Votre nom (appuyez sur entrée pour valider)", value="", placeholder="Veuillez entrer votre nom")
     note = st.text_input("Ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
     st.session_state["client_name"] = client_name
     
-    
-    
     if client_name != "":
         # Update prices
         final_order = UpdateOrderFinal(order)
+        # Preview
+        
         st.dataframe(final_order, hide_index=True)
         # Generate PDF
         pdf_buffer = GeneratePDF(pd.DataFrame(final_order), client_name, note)
