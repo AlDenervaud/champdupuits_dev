@@ -156,7 +156,7 @@ def GeneratePDF(df, client_name, note):
     # Add table rows
     def add_table_rows(df):
         for index, row in df.iterrows():
-            if row["Nom"] == "":
+            if row["name"] == "":
                 pdf.cell(product_width+price_width+quantity_width, cell_height, txt="", border=0)
                 pdf.cell(total_width, cell_height, txt=row["total"], border=1, align="C", fill=False)
             else:
