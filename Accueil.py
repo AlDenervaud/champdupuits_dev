@@ -28,6 +28,8 @@ products_file_path = os.path.join(root_dir, "products.xlsx")
 df = pd.read_excel(products_file_path, sheet_name="products")
 df["Prix"] = df["Prix"].apply(lambda x: x if "/kg" in str(x).lower() else "{} €".format(x))
 
+st.dataframe(df)
+
 # Create a grid
 gb = GridOptionsBuilder.from_dataframe(df) #, editable=True)
 gb.configure_grid_options(rowHeight=100)
@@ -49,8 +51,6 @@ thumbnail_renderer = JsCode("""
         }
     """)
 
-st.success("thumbnail renderer")
-
 # Configure image column to use the renderer
 gb.configure_column(
         "Image_Path",
@@ -58,7 +58,7 @@ gb.configure_column(
         width=100,
         cellRenderer=thumbnail_renderer
     )
-st.success("column config")
+
 # Display the dataframe with AgGrid
 grid = AgGrid(df,
             gridOptions=gb.build(),
