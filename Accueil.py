@@ -93,7 +93,7 @@ order = selected_rows[selected_rows["select"]]
 
 if order.shape[0]>0:
     
-    st.dataframe(order)
+    st.dataframe(order.drop("Image_Path", axis=1))
 
     # Retrieve client's name
     client_name = st.text_input("Votre nom (appuyez sur entrée pour valider)", value="", placeholder="Veuillez entrer votre nom")
@@ -102,6 +102,7 @@ if order.shape[0]>0:
     
     # Update prices
     final_order = UpdateOrderFinal(order)
+    st.dataframe(final_order)
     # Generate PDF
     pdf_buffer = GeneratePDF(pd.DataFrame(final_order), client_name, note)
     
