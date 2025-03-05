@@ -168,6 +168,7 @@ def UpdateOrderFinal(order):
     
     # Updates total price based on price and quantity (round quantity)
     order["price_temp"] = order["price"].apply(lambda x: float(x.split(" ")[0].replace(",", ".")))
+    order["quantity"] = order["quantity"].apply(lambda x: x.replace(",", "."))
     order["quantity"] = pd.to_numeric(order["quantity"], errors='coerce')
     order["quantity"] = order.apply(lambda row: math.floor(row["quantity"]) if row["units"]=="€" else round(row["quantity"], 1), axis=1)
     order["total"] = order["price_temp"] * order["quantity"]
