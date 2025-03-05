@@ -27,6 +27,7 @@ products_file_path = os.path.join(root_dir, "products.xlsx")
 # Get list of products
 df = pd.read_excel(products_file_path, sheet_name="products")
 df["Prix"] = df["Prix"].apply(lambda x: x if "/kg" in str(x).lower() else "{} €".format(x))
+df["Image_Path"] = df["Image_Path"].astype(str)
 
 # Create a grid
 gb = GridOptionsBuilder.from_dataframe(df) #, editable=True)
