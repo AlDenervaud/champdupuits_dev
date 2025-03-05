@@ -27,19 +27,23 @@ products_file_path = os.path.join(root_dir, "products.xlsx")
 # Get list of products
 df = pd.read_excel(products_file_path, sheet_name="products")
 df["Prix"] = df["Prix"].apply(lambda x: x if "/kg" in str(x).lower() else "{} €".format(x))
-df["Image_Path"] = df["Image_Path"].astype(str)
+#df["Image_Path"] = df["Image_Path"].astype(str)
+df.insert(0, "select", False)
+
 
 import pandas as pd
 import streamlit as st
 
 # Column configs
 image_conf = st.column_config.ImageColumn(label="Photo", width="small", help="Photo non contractuelle")
+select_conf = st.column_config.CheckboxColumn(label="Ajouter au panier")
 
 selected_rows = st.data_editor(
                                 df,
                                 column_config={
+                                                "select":select_conf,
                                                 "Image_Path":image_conf,
-                                },
+                                                },
                                 hide_index = True,
                                 disabled = df.columns,
                                 row_height=75,
