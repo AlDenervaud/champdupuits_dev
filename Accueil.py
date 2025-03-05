@@ -47,8 +47,7 @@ st.markdown("""Sur ce site vous pourrez trouver la liste des produits de la ferm
  
 st.info("""Dans le tableau ci-dessous, cochez les produits que vous souhaitez commander et
     indiquez les quantités voulues en nombre d'unités ou en poids (kg).""",
-    icon="✍️",
-)
+    icon="✍️")
  
 ###############################################################################
 
