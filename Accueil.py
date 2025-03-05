@@ -101,13 +101,15 @@ if order.shape[0]>0:
     note = st.text_input("Ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
     st.session_state["client_name"] = client_name
     
-    # Update prices
-    final_order = UpdateOrderFinal(order)
-    st.dataframe(final_order, hide_index=True)
-    # Generate PDF
-    pdf_buffer = GeneratePDF(pd.DataFrame(final_order), client_name, note)
+    
     
     if client_name != "":
+        # Update prices
+        final_order = UpdateOrderFinal(order)
+        st.dataframe(final_order, hide_index=True)
+        # Generate PDF
+        pdf_buffer = GeneratePDF(pd.DataFrame(final_order), client_name, note)
+        
         # Download button - PDF need to be generated before
         if st.download_button(label="Télécharger le bon de commande",
                         type="primary",
