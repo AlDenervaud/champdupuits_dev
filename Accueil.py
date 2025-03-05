@@ -101,9 +101,9 @@ if order.shape[0]>0:
     st.session_state["client_name"] = client_name
     
     # Update prices
-    UpdateOrderFinal(order)
+    final_order = UpdateOrderFinal(order)
     # Generate PDF
-    pdf_buffer = GeneratePDF(pd.DataFrame(order), client_name, note)
+    pdf_buffer = GeneratePDF(pd.DataFrame(final_order), client_name, note)
     
     # Download button - PDF need to be generated before
     if st.download_button(label="Télécharger le bon de commande",

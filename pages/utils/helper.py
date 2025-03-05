@@ -158,13 +158,13 @@ def GeneratePDF(df, client_name, note):
         for index, row in df.iterrows():
             if row["Nom"] == "":
                 pdf.cell(product_width+price_width+quantity_width, cell_height, txt="", border=0)
-                pdf.cell(total_width, cell_height, txt=row["Total"], border=1, align="C", fill=False)
+                pdf.cell(total_width, cell_height, txt=row["total"], border=1, align="C", fill=False)
             else:
                 pdf.cell(product_width, cell_height, txt=row["Nom"], border=1, align="C", fill=True)
                 pdf.cell(price_width, cell_height, txt=str(row["Prix"]), border=1, align="C", fill=False)
                 #pdf.cell(category_width, cell_height, txt=str(row["Categorie"]), border=1, align="C", fill=True)
                 pdf.cell(quantity_width, cell_height, txt=str(row["quantity"]), border=1, align="C", fill=False)
-                pdf.cell(total_width, cell_height, txt=row["Total"], border=1, align="C", fill=False)
+                pdf.cell(total_width, cell_height, txt=row["total"], border=1, align="C", fill=False)
             pdf.ln()
     
     # Get unique categories
@@ -209,24 +209,24 @@ def ResetOrder():
 
 def UpdateOrderFinal(order):
     # Reset Total column
-    if "Total" in order.columns:
-        order.drop("Total", axis=1, inplace=True)
+    if "total" in order.columns:
+        order.drop("total", axis=1, inplace=True)
     # Remove row with grand total
     order = order[order["Nom"].str.strip() != ""]
     
     # Updates total price based on price and quantity
     order["price_temp"] = order["Prix"].apply(lambda x: float(x.split(" ")[0].replace(",", ".")))
     order["quantity"] = pd.to_numeric(order["quantity"], errors='coerce')
-    order["Total"] = order["price_temp"] * order["quantity"]
+    order["total"] = order["price_temp"] * order["quantity"]
     
     # Remove items with 0 quantity
     order = order[order["quantity"] != 0]
     
     # Add grand total
-    order = order._append({"Nom":"", "Prix":"", "Catégorie":"", "quantity":"", "Total":order["Total"].sum()}, ignore_index=True)
-    order["Total"] = order["Total"].apply(lambda x: "{:.2f} €".format(x))
+    order = order._append({"Nom":"", "Prix":"", "Catégorie":"", "quantity":"", "total":order["total"].sum()}, ignore_index=True)
+    order["total"] = order["total"].apply(lambda x: "{:.2f} €".format(x))
 
     # Cleaning
-    final_order = order[['Nom', 'Prix', 'Catégorie', 'quantity', 'Total']]
+    final_order = order[['Nom', 'Prix', 'Catégorie', 'quantity', 'total']]
 
     return final_order
