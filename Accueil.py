@@ -120,7 +120,7 @@ if order.shape[0]>0:
     
     # Retrieve client's name
     client_name = st.text_input("Votre nom (appuyez sur entrée pour valider)", value="", placeholder="Veuillez entrer votre nom")
-    note = st.text_input("optionnel: ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
+    note = st.text_input("Optionnel: ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
     st.session_state["client_name"] = client_name
     
     # Proceed to PDF generation / download only if a name has been provided
