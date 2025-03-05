@@ -96,11 +96,6 @@ order = selected_rows[selected_rows["select"]]
 # Proceed only if at least one row selected
 if order.shape[0]>0:
 
-    # Retrieve client's name
-    client_name = st.text_input("Votre nom (appuyez sur entrée pour valider)", value="", placeholder="Veuillez entrer votre nom")
-    note = st.text_input("Ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
-    st.session_state["client_name"] = client_name
-    
     # Update prices
     final_order = UpdateOrderFinal(order)
     
@@ -116,6 +111,11 @@ if order.shape[0]>0:
                     hide_index = True,
                     disabled = order.columns,
                 )
+    
+    # Retrieve client's name
+    client_name = st.text_input("Votre nom (appuyez sur entrée pour valider)", value="", placeholder="Veuillez entrer votre nom")
+    note = st.text_input("Ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
+    st.session_state["client_name"] = client_name
     
     # Proceed to PDF generation / download only if a name has been provided
     if client_name != "":
