@@ -15,8 +15,8 @@ st.markdown(
     <style>
         /* Center content horizontally and align to the top */
         .main .block-container {
-            max-width: 2000px;  /* Adjust width as needed */
-            margin: 0 auto;    /* Center horizontally */
+            max-width: 2500px;  /* Adjust width as needed */
+            margin: 50 auto;    /* Center horizontally */
             padding-top: 50px; /* Adjust top padding for spacing */
             text-align: center; /* Center text */
         }
