@@ -1,0 +1,13 @@
+pip
+wheel
+folium
+fpdf
+geopandas
+pandas
+matplotlib
+numpy
+openpyxl
+streamlit
+streamlit-aggrid
+streamlit-folium
+streamlit_js_eval
