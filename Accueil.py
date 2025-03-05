@@ -67,7 +67,7 @@ import streamlit as st
 
 # Column configs
 image_conf = st.column_config.ImageColumn(label="Photo", width="medium", help="Photo non contractuelle")
-select_conf = st.column_config.CheckboxColumn(label="Ajouter au panier")
+select_conf = st.column_config.CheckboxColumn(label="Commander")
 # Choose which column are editable
 active_cols = ["select", "quantity"]
 disabled_cols = [col for col in df.columns if col not in active_cols]
