@@ -216,17 +216,17 @@ def UpdateOrderFinal(order):
     
     # Updates total price based on price and quantity
     order["price_temp"] = order["Prix"].apply(lambda x: float(x.split(" ")[0].replace(",", ".")))
-    order["Quantité"] = pd.to_numeric(order["Quantité"], errors='coerce')
-    order["Total"] = order["price_temp"] * order["Quantité"]
+    order["quantity"] = pd.to_numeric(order["quantity"], errors='coerce')
+    order["Total"] = order["price_temp"] * order["quantity"]
     
     # Remove items with 0 quantity
-    order = order[order["Quantité"] != 0]
+    order = order[order["quantity"] != 0]
     
     # Add grand total
-    order = order._append({"Nom":"", "Prix":"", "Catégorie":"", "Quantité":"", "Total":order["Total"].sum()}, ignore_index=True)
+    order = order._append({"Nom":"", "Prix":"", "Catégorie":"", "quantity":"", "Total":order["Total"].sum()}, ignore_index=True)
     order["Total"] = order["Total"].apply(lambda x: "{:.2f} €".format(x))
 
     # Cleaning
-    final_order = order[['Nom', 'Prix', 'Catégorie', 'Quantité', 'Total']]
+    final_order = order[['Nom', 'Prix', 'Catégorie', 'quantity', 'Total']]
 
     return final_order
