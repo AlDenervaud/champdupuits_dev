@@ -119,13 +119,18 @@ if order.shape[0]>0:
     note = st.text_input("Optionnel: ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
     st.session_state["client_name"] = client_name
     
+    c1, c2, c3 = st.columns(1,1,1)
+    # Reset order button
+    if c1.button("Réinitialiser la commande"):
+        ResetOrder()
+        
     # Proceed to PDF generation / download only if a name has been provided
     if client_name != "":
         # Generate PDF
         pdf_buffer = GeneratePDF(pd.DataFrame(final_order), client_name, note)
         
         # Download button - PDF need to be generated before
-        if st.download_button(label="Télécharger le bon de commande",
+        if c2.download_button(label="Télécharger le bon de commande",
                         type="primary",
                         data=pdf_buffer,
                         file_name="Commande_{}_{}.pdf".format(client_name.replace(" ", "_"), dt.now().strftime("%d%m%Y")),
