@@ -37,6 +37,8 @@ import streamlit as st
 # Column configs
 image_conf = st.column_config.ImageColumn(label="Photo", width="small", help="Photo non contractuelle")
 select_conf = st.column_config.CheckboxColumn(label="Ajouter au panier")
+active_cols = ["select"]
+disabled_cols = [col for col in df.columns if col not in active_cols]
 
 selected_rows = st.data_editor(
                                 df,
@@ -45,7 +47,7 @@ selected_rows = st.data_editor(
                                                 "Image_Path":image_conf,
                                                 },
                                 hide_index = True,
-                                disabled = df.columns,
+                                disabled = disabled_cols,
                                 row_height=75,
                             )
 
