@@ -21,7 +21,8 @@ st.markdown("""Sur ce site vous pourrez trouver la liste des produits de la ferm
 ###############################################################################
 
 # Basic settings
-root_dir = os.path.dirname(os.path.dirname(__file__))
+root_dir = os.path.dirname(__file__)
+st.write(root_dir)
 products_file_path = os.path.join(root_dir, "products.xlsx")
 
 # Get list of products
