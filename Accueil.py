@@ -115,7 +115,7 @@ if order.shape[0]>0:
     note = st.text_input("Optionnel: ajouter une remarque (appuyez sur entrée pour valider)", value="", placeholder="...")
     st.session_state["client_name"] = client_name
     
-    c1, c2 = st.columns([1,1])
+    c1, c2 = st.columns([1,2])
     # Reset order button
     if c1.button("Réinitialiser la commande"):
         ResetOrder()
