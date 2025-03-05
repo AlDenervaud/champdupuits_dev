@@ -42,6 +42,7 @@ selected_rows = st.data_editor(
                                 },
                                 hide_index = True,
                                 disabled = df.columns,
+                                row_height=75,
                             )
 
 
