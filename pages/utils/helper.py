@@ -165,9 +165,10 @@ def UpdateOrderFinal(order):
     # Remove row with grand total
     order = order[order["name"].str.strip() != ""]
     
-    # Updates total price based on price and quantity
+    # Updates total price based on price and quantity (round quantity)
     order["price_temp"] = order["price"].apply(lambda x: float(x.split(" ")[0].replace(",", ".")))
     order["quantity"] = pd.to_numeric(order["quantity"], errors='coerce')
+    order["quantity"] = order["quantity"].apply(lambda x: round(x, 1))
     order["total"] = order["price_temp"] * order["quantity"]
     
     # Remove items with 0 quantity
