@@ -71,24 +71,18 @@ def _get_secret(path: Sequence[str], default: Any = None) -> Any:
 
 
 def get_contact_email() -> str | None:
-    email_config = _get_secret(("email",), default={})
-    address = str(email_config.get("address", "")).strip() if isinstance(email_config, dict) else ""
+    address = str(_get_secret(("email", "address"), default="")).strip()
     return address or None
 
 
 def get_default_receiver() -> str | None:
-    email_config = _get_secret(("email",), default={})
-    receiver = str(email_config.get("receiver", "")).strip() if isinstance(email_config, dict) else ""
+    receiver = str(_get_secret(("email", "receiver"), default="")).strip()
     return receiver or None
 
 
 def _get_email_credentials() -> tuple[str, str] | None:
-    email_config = _get_secret(("email",), default={})
-    if not isinstance(email_config, dict):
-        return None
-
-    address = str(email_config.get("address", "")).strip()
-    passkey = str(email_config.get("passkey", "")).strip()
+    address = str(_get_secret(("email", "address"), default="")).strip()
+    passkey = str(_get_secret(("email", "passkey"), default="")).strip()
     if not address or not passkey:
         return None
 
@@ -369,3 +363,4 @@ def send_email(
         return False, "Échec d'envoi de l'e-mail. Vérifiez la connectivité réseau et la configuration SMTP."
 
     return True, f"E-mail envoyé à {receiver_clean}."
+
