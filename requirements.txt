@@ -1,5 +1,6 @@
 pip
 wheel
+altair>=5
 folium
 fpdf
 geopandas
@@ -7,7 +8,7 @@ pandas
 matplotlib
 numpy
 openpyxl
-streamlit
+streamlit==1.54.0
 streamlit-aggrid
 streamlit-folium
 streamlit_js_eval
